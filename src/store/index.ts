@@ -80,6 +80,8 @@ export const store = createStore<State>({
     }
    }
 
+   console.log(store.state.perPage);
+   console.log(store.state.page);
    const response = await fetch(
     `https://api.github.com/search/repositories?q=${store.state.searchInput}&per_page=${store.state.perPage}&page=${store.state.page}`,
     {
@@ -111,7 +113,6 @@ export const store = createStore<State>({
  mutations: {
   setPage(state, payload) {
    state.page = Number(payload);
-   console.log(payload);
   },
 
   setCache(state, payload) {

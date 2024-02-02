@@ -21,18 +21,27 @@ export default defineComponent({
   const store = useStore(key);
   const searchInput = ref("");
   const route = useRouter();
+  const q = route.currentRoute.value.query.q;
+  const page = route.currentRoute.value.query.page;
+  const perPage = route.currentRoute.value.query.perPage;
 
   onMounted(() => {
-   searchInput.value = String(route.currentRoute.value.query.q);
-   store.dispatch("setPerPage", {
-    perPage: route.currentRoute.value.query.perPage,
-    serach: false,
-   });
-   store.dispatch("setPage", route.currentRoute.value.query.page);
-   store.dispatch("setSearchInput", {
-    search: route.currentRoute.value.query.q,
-    setPageDefault: false,
-   });
+   if (perPage) {
+    store.dispatch("setPerPage", {
+     perPage: perPage,
+     serach: false,
+    });
+   }
+   if (page) {
+    store.dispatch("setPage", page);
+   }
+   if (q) {
+    searchInput.value = String(q);
+    store.dispatch("setSearchInput", {
+     search: q,
+     setPageDefault: false,
+    });
+   }
   });
 
   function setSearch() {
